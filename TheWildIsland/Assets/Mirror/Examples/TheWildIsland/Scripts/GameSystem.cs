@@ -1,71 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using Mirror;
+using Mirror.Examples.Pong;
 using UnityEngine;
 
-namespace Mirror.Examples.Pong
+public class GameSystem : NetworkBehaviour
 {
-    // Custom NetworkManager that simply assigns the correct racket positions when
-    // spawning players. The built in RoundRobin spawn method wouldn't work after
-    // someone reconnects (both players would be on the same side).
-    [AddComponentMenu("")]
-    public class GameSystem : NetworkManager
-    {
-        public Transform leftRacketSpawn;
-        public Transform rightRacketSpawn;
-        GameObject ball;
-
-        private bool _hasStarted = false;
+    [SerializeField] private PlayerManager _playerManager;
+    private bool _hasStarted = false;
         
-        private void OnGUI()
+    private void OnGUI()
+    {
+        if (!isServer)
         {
-            Debug.Log(IsServer);
-            
-            if (!IsServer)
-            {
-                return;
-            }
-
-            Vector2 pos = new Vector2(100, Screen.height - 200);
-            Vector2 size = new Vector2(200, 100);
-
-            if (!_hasStarted)
-            {
-                if (GUI.Button(new Rect(pos, size), "Begin Match"))
-                {
-                    OnMatchBegin();
-                }
-            }
+            return;
         }
 
+        Vector2 pos = new Vector2(100, Screen.height - 200);
+        Vector2 size = new Vector2(200, 100);
 
-        public override void OnServerAddPlayer(NetworkConnection conn)
+        if (!_hasStarted)
         {
-            // add player at correct spawn position
-            Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
-            GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
-            NetworkServer.AddPlayerForConnection(conn, player);
-        }
-
-        public override void OnServerDisconnect(NetworkConnection conn)
-        {
-            // destroy ball
-            if (ball != null)
-                NetworkServer.Destroy(ball);
-
-            // call base functionality (actually destroys the player)
-            base.OnServerDisconnect(conn);
-        }
-
-        private void OnMatchBegin()
-        {
-            if (numPlayers != 2)
+            if (GUI.Button(new Rect(pos, size), "Begin Match"))
             {
-                Debug.LogError("Need two connected players!");
-                return;
+                OnMatchBegin();
             }
-            
-            _hasStarted = true;
-            
-            ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
-            NetworkServer.Spawn(ball);
         }
     }
+    
+    private void OnMatchBegin()
+    {
+        if (_playerManager.numPlayers != 2)
+        {
+            Debug.LogError("Need two connected players!");
+            return;
+        }
+            
+        _hasStarted = true;
+            
+        _playerManager.ball = Instantiate(_playerManager.spawnPrefabs.Find(prefab => prefab.name == "Ball"));
+        NetworkServer.Spawn(_playerManager.ball);
+    }
+
 }
