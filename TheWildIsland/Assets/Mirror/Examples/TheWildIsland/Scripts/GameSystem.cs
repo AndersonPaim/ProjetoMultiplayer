@@ -38,8 +38,8 @@ public class GameSystem : NetworkBehaviour
             
         _hasStarted = true;
             
-        _playerManager.ball = Instantiate(_playerManager.spawnPrefabs.Find(prefab => prefab.name == "Ball"));
-        NetworkServer.Spawn(_playerManager.ball);
+        //_playerManager.ball = Instantiate(_playerManager.spawnPrefabs.Find(prefab => prefab.name == "Ball"));
+        //NetworkServer.Spawn(_playerManager.ball);
     }
 
 }

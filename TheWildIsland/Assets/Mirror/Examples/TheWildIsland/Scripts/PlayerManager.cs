@@ -8,24 +8,19 @@ namespace Mirror.Examples.Pong
     [AddComponentMenu("")]
     public class PlayerManager : NetworkManager
     {
-        public Transform leftRacketSpawn;
-        public Transform rightRacketSpawn;
-        public GameObject ball;
+        [SerializeField] private Transform _p1SpawnPosition;
+        [SerializeField] private Transform _p2SpawnPosition;
 
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             // add player at correct spawn position
-            Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
+            Transform start = numPlayers == 0 ? _p1SpawnPosition : _p2SpawnPosition;
             GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
             NetworkServer.AddPlayerForConnection(conn, player);
         }
 
         public override void OnServerDisconnect(NetworkConnection conn)
         {
-            // destroy ball
-            if (ball != null)
-                NetworkServer.Destroy(ball);
-
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
         }
