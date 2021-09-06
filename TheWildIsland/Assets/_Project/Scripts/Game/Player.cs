@@ -12,11 +12,20 @@ namespace Mirror.Examples.Pong
         private int _playerNumber;
         private bool _canMove = false;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            NetworkLobby.OnStartGame += SpawnPosition;
+        }
+
         public void SetupPlayer(int number)
         {
             _playerNumber = number;
+        }
 
-            if (number == 1)
+        public void SpawnPosition()
+        {
+            if (_playerNumber == 1)
             {
                 transform.position = new Vector3(15, -10, 0);
             }

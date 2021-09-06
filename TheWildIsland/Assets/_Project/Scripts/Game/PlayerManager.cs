@@ -20,7 +20,6 @@ namespace Mirror.Examples.Pong
             GameObject player = Instantiate(playerPrefab);
             Player p = player.GetComponent<Player>();
             p.SetupPlayer(numPlayers);
-            DontDestroyOnLoad(player);
             
             NetworkServer.AddPlayerForConnection(conn, player);
             OnConnectPlayer?.Invoke();

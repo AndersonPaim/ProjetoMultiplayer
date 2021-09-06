@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class NetworkLobby : NetworkBehaviour
 {
-	public event Action OnStartGame;
+	public static event Action OnStartGame;
 
 	[SerializeField] private Button _readyButton;
 	[SerializeField] private List<Toggle> _playersConfirmed;
