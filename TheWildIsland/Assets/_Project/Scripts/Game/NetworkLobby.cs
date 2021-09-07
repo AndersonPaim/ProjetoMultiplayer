@@ -14,7 +14,6 @@ public class NetworkLobby : NetworkBehaviour
 
 	[SerializeField] private Button _readyButton;
 	[SerializeField] private List<Toggle> _playersConfirmed;
-	[SerializeField] private PlayerManager _playerManager;
 	
 	[SyncVar]
 	private int _readyPlayers;

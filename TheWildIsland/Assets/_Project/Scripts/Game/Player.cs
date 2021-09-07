@@ -9,6 +9,7 @@ namespace Mirror.Examples.Pong
         [SerializeField] private float _speed;
         [SerializeField] private Rigidbody2D _rb;
         
+        [SyncVar]
         private int _playerNumber;
         private bool _canMove = false;
 
@@ -25,6 +26,8 @@ namespace Mirror.Examples.Pong
 
         public void SpawnPosition()
         {
+            _canMove = true;
+            
             if (_playerNumber == 1)
             {
                 transform.position = new Vector3(15, -10, 0);

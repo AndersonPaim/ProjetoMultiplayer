@@ -1,47 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
-using Mirror.Examples.Pong;
+using Game;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static Mirror.NetworkBehaviour;
 
-public class GameSystem : NetworkBehaviour
+namespace Mirror.Examples.Pong
 {
-    [SerializeField] private PlayerManager _playerManager;
-    
-    private bool _hasStarted = false;
-    
-    private void OnGUI()
+
+    [AddComponentMenu("")]
+    public class GameSystem : NetworkManager
     {
-        if (!isServer)
+        public static event Action OnConnectPlayer;
+        public static event Action OnDisconnectPlayer;
+
+        [SerializeField] private List<Player> _players = new List<Player>();
+        
+        public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            return;
+            GameObject player = Instantiate(playerPrefab);
+            Player p = player.GetComponent<Player>();
+            _players.Add(p);
+            Debug.Log("NUM PLAYERS: " + numPlayers);
+            p.SetupPlayer(numPlayers);
+            NetworkServer.AddPlayerForConnection(conn, player);
+            OnConnectPlayer?.Invoke();
         }
 
-        Vector2 pos = new Vector2(100, Screen.height - 200);
-        Vector2 size = new Vector2(200, 100);
-
-        if (!_hasStarted)
+        public override void OnServerDisconnect(NetworkConnection conn)
         {
-            if (GUI.Button(new Rect(pos, size), "Begin Match"))
-            {
-                OnMatchBegin();
-            }
+            // call base functionality (actually destroys the player)
+            base.OnServerDisconnect(conn);
+            OnDisconnectPlayer?.Invoke();
         }
     }
-    
-    private void OnMatchBegin()
-    {
-        if (_playerManager.numPlayers != 2)
-        {
-            Debug.LogError("Need two connected players!");
-            return;
-        }
-            
-        _hasStarted = true;
-            
-        //_playerManager.ball = Instantiate(_playerManager.spawnPrefabs.Find(prefab => prefab.name == "Ball"));
-        //NetworkServer.Spawn(_playerManager.ball);
-    }
-
 }
