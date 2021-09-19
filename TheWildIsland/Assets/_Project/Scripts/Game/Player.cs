@@ -6,25 +6,25 @@ namespace Mirror.Examples.Pong
 {
     public class Player : NetworkBehaviour
     {
+        public delegate void PlayerDataHandler(PlayerData playerData);
+        public PlayerDataHandler OnPlayerDataUpdate;
+
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private SpriteRenderer _sprite;
-        
-        private bool _isGrounded = true;
+        [SerializeField] private GameObject _weaponPos;
 
-        [SyncVar (hook = nameof(FlipPlayer))]
-        private int _direction;
+        private bool _isGrounded = true;
+        private int _direction = 1;
 
         [SyncVar]
         private int _playerNumber;
         private bool _canMove = false;
-
-        private void Awake()
-        {
-            DontDestroyOnLoad(transform.gameObject);
-            NetworkLobby.OnStartGame += SpawnPosition;
-        }
+        private GameObject _currentWeapon;
+        private PlayerData _playerData;
+        private bool _isRunning;
+        private bool _isJumping;
 
         public void SetupPlayer(int number)
         {
@@ -45,12 +45,33 @@ namespace Mirror.Examples.Pong
             }
         }
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            NetworkLobby.OnStartGame += SpawnPosition;
+            //TODO change weapon
+            _currentWeapon = _weaponPos.transform.GetChild(0).gameObject;
+        }
+
+
         private void FixedUpdate()
         {
             if (isLocalPlayer && _canMove)
             {
                 InputListener();
             }
+
+            _playerData = new PlayerData();
+        }
+
+        private void CreatePlayerStruct()
+        {
+            _playerData.OnGround = _isGrounded;
+            _playerData.Jump = _isJumping;
+            _playerData.Run = _isRunning;
+            //_playerData.TakeDamage = _isTakingDamage;
+
+            OnPlayerDataUpdate?.Invoke(_playerData);
         }
 
         //TODO NEW INPUT SYSTEM
@@ -58,30 +79,29 @@ namespace Mirror.Examples.Pong
         {
             if (Input.GetKey(KeyCode.A))
             {
-                _direction = -1;
-                CmdChangeDirection(-1);
                 Movement(-1);
-
-                if(isClient)
-                {
-                    FlipPlayer(0, _direction);
-                }
+                FlipPlayer(-1);
+                _isRunning = true;
             }
-            if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.D))
             {
-                _direction = 1;
-                CmdChangeDirection(1);
                 Movement(1);
-
-                if(isClient)
-                {
-                    FlipPlayer(0, _direction);
-                }
+                FlipPlayer(1);
+                _isRunning = true;
             }
-            if(Input.GetKey(KeyCode.Space))
+            else
+            {
+                _isRunning = false;
+            }
+
+
+            if (Input.GetKey(KeyCode.Space))
             {
                 Jump();
-
+            }
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+                Aim();
             }
         }
 
@@ -93,23 +113,29 @@ namespace Mirror.Examples.Pong
             _rb.velocity = vel;
         }
 
-        [Command]
-        private void CmdChangeDirection(int direction)
+        private void Aim()
         {
-            _direction = direction;
-            FlipPlayer(0, direction);
+            _currentWeapon.transform.LookAt(Input.mousePosition);
+            _currentWeapon.transform.Rotate(0, -90, 0);
+
         }
 
-        private void FlipPlayer(int oldDirection, int newDirection)
+        private void FlipPlayer(int newDirection)
         {
-            if(newDirection == -1)
+            if(_direction != newDirection)
             {
-                _sprite.flipX = true;
+                _direction = newDirection;
+                //TODO FIX ROTATION
+                if(newDirection == -1)
+                {
+                    transform.Rotate(0, 180, 0);
+                }
+                else
+                {
+                    transform.Rotate(0, -180, 0);
+                }
             }
-            else
-            {
-                _sprite.flipX = false;
-            }
+
         }
 
         private void Jump()
@@ -117,6 +143,7 @@ namespace Mirror.Examples.Pong
             if(_isGrounded)
             {
                 _rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
+                _isJumping = true;
             }
         }
 
@@ -127,6 +154,7 @@ namespace Mirror.Examples.Pong
             if (other.gameObject.layer == groundLayer)
             {
                _isGrounded = true;
+               _isJumping = false;
             }
         }
 
@@ -136,7 +164,7 @@ namespace Mirror.Examples.Pong
 
             if (other.gameObject.layer == groundLayer)
             {
-               _isGrounded = false;
+              _isGrounded = false;
             }
         }
     }
