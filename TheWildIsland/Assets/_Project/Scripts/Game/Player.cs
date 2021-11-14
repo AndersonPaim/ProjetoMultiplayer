@@ -1,5 +1,7 @@
 using UnityEngine;
 using CodeMonkey.Utils;
+using TMPro;
+using UnityEngine.UI;
 
 namespace Mirror.Examples.Pong
 {
@@ -15,6 +17,7 @@ namespace Mirror.Examples.Pong
         [SerializeField] private GameObject _weaponPos;
         [SerializeField] private GameObject _bulletObj;
         [SerializeField] private PlayerConnection _connection;
+        [SerializeField] private TextMeshPro _nicknameText;
 
         private bool _isGrounded = true;
         private int _direction = 1;
@@ -26,7 +29,7 @@ namespace Mirror.Examples.Pong
         private bool _isJumping;
         private Animator _anim;
 
-        [SyncVar]
+        [SyncVar(hook = nameof(SetNicknameText))]
         public string PlayerName;
 
         private float _sensitivity = 0.4f;
@@ -103,6 +106,11 @@ namespace Mirror.Examples.Pong
             }
         }
 
+        private void SetNicknameText(string oldValue, string newValue)
+        {
+            _nicknameText.text = newValue;
+        }
+
         //TODO NEW INPUT SYSTEM
         private void InputListener()
         {
@@ -169,10 +177,12 @@ namespace Mirror.Examples.Pong
                 if(newDirection == -1)
                 {
                     transform.Rotate(0, 180, 0);
+                    _nicknameText.transform.Rotate(0, 180, 0);
                 }
                 else
                 {
                     transform.Rotate(0, -180, 0);
+                    _nicknameText.transform.Rotate(0, -180, 0);
                 }
             }
 
