@@ -113,6 +113,8 @@ namespace Mirror.Examples.Pong
             GameObject obj = Instantiate(_bulletObj, pos, rot);
             obj.GetComponent<Bullet>().Shoot();
             NetworkServer.Spawn(obj);
+
+            //TODO SET FORCE FROM CURRENT WEAPON
         }
 
         [ClientRpc]

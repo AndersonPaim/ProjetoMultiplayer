@@ -16,8 +16,11 @@ namespace Mirror.Examples.Pong
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private GameObject _weaponPos;
         [SerializeField] private GameObject _bulletObj;
+        [SerializeField] private GameObject _shootPos;
         [SerializeField] private PlayerConnection _connection;
         [SerializeField] private TextMeshPro _nicknameText;
+
+        public PlayerConnection Connection => _connection;
 
         private bool _isGrounded = true;
         private int _direction = 1;
@@ -138,7 +141,7 @@ namespace Mirror.Examples.Pong
             }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                OnShoot?.Invoke(_weaponPos.transform.position, _weaponPos.transform.rotation, _bulletObj);
+                Shoot();
             }
             if (Input.GetKey(KeyCode.Mouse1))
             {
@@ -164,6 +167,20 @@ namespace Mirror.Examples.Pong
             //_currentWeapon.transform.LookAt(lookPos);
 
             _isRotating = true;
+        }
+
+        private void Shoot()
+        {
+            OnShoot?.Invoke(_shootPos.transform.position, _weaponPos.transform.rotation, _bulletObj);
+
+            if(_direction == 1)
+            {
+                _rb.AddForce(_weaponPos.transform.position * (150 / 3));
+            }
+            else
+            {
+                _rb.AddForce(_weaponPos.transform.position * (150 / 3));
+            }
         }
 
         private void FlipPlayer(int newDirection)

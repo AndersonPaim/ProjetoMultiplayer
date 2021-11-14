@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Weapon1
   m_EditorClassIdentifier: 
   damage: 0.2
-  blastRadius: 0.2
+  blastRadius: 5
   cost: 0.2
+  knockback: 120
