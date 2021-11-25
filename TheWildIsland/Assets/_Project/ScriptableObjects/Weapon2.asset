@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Weapon2
   m_EditorClassIdentifier: 
   damage: 0.3
-  blastRadius: 0.3
-  cost: 0.3
+  blastRadius: 10
+  knockback: 151.48
+  weight: 5
+  velocity: 10
+  reloading: 0
+  sprite: {fileID: 8101326686158321518, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}

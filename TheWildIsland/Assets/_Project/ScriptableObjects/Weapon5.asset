@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   blastRadius: 1
-  cost: 1
+  knockback: 0
+  weight: 0
+  velocity: 0
+  reloading: 0
+  sprite: {fileID: -5039132156621874023, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}

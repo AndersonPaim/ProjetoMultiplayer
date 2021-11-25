@@ -487,15 +487,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _WeaponBalancer:
+  - {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
+  - {fileID: 11400000, guid: 4b28dbe10f01aed4bb1821c7cc464cbf, type: 2}
+  - {fileID: 11400000, guid: 77b4e032a6bf9614f9925e5c81ebdff5, type: 2}
+  - {fileID: 11400000, guid: ebf704711a29e1247b9c454fae392ec3, type: 2}
+  - {fileID: 11400000, guid: 5aab3f571c6076648b81f357920f88e3, type: 2}
   _speed: 9
   _jumpForce: 35
   _rb: {fileID: 7923852577702581509}
   _sprite: {fileID: 7923852577702581506}
   _weaponPos: {fileID: 6584013242693331917}
+  _weapon: {fileID: 4994644102965251700}
+  _spriteWeapons:
+  - {fileID: -6635782518697459388, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}
+  - {fileID: 8101326686158321518, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}
+  - {fileID: -7353613653143852761, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}
+  - {fileID: -1499788451389146327, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}
+  - {fileID: -2885549205037184772, guid: 935ce0bc0b6a6ca418f44978ff6527c7, type: 3}
   _bulletObj: {fileID: 5421146326761704071, guid: c6b013d9c7d80ea4c9a18f380509b30e, type: 3}
   _shootPos: {fileID: 8686188580555380450}
   _connection: {fileID: 1629680191917204825}
   _nicknameText: {fileID: 7129349327660914164}
+  bullet: {fileID: 4749884690120568887, guid: c6b013d9c7d80ea4c9a18f380509b30e, type: 3}
   PlayerName: 
 --- !u!114 &1629680191917204825
 MonoBehaviour:

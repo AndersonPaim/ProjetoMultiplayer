@@ -7,7 +7,9 @@ namespace Mirror.Examples.Pong
 
     public class Bullet : NetworkBehaviour
     {
-        [SerializeField] private WeaponBalancer _weaponBalancer;
+        public int tipoArma;
+       // public WeaponBalancer[] _weaponBalancer;
+        public WeaponBalancer _weaponBalancer;
         private Rigidbody2D _rb;
         private Animator _anim;
 
@@ -15,7 +17,11 @@ namespace Mirror.Examples.Pong
         {
             //TODO PASSAR SCRIPTABLE OBJECTS COM OS STATS DA BULLET
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            _rb.velocity = transform.right * 20;
+            _rb.velocity = transform.right * _weaponBalancer.velocity;
+
+
+            _rb.mass = _weaponBalancer.weight;
+            Debug.Log("tipoArma_" + tipoArma);
         }
 
         public void DestroyBullet()

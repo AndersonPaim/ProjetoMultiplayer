@@ -119,7 +119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9b7a23b7474b54cbdcb7b594c33d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponBalancer: {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
+  syncMode: 0
+  syncInterval: 0.1
+  _weaponBalancer:
+  - {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
+  - {fileID: 11400000, guid: 4b28dbe10f01aed4bb1821c7cc464cbf, type: 2}
+  - {fileID: 11400000, guid: 77b4e032a6bf9614f9925e5c81ebdff5, type: 2}
+  - {fileID: 11400000, guid: ebf704711a29e1247b9c454fae392ec3, type: 2}
+  - {fileID: 11400000, guid: 5aab3f571c6076648b81f357920f88e3, type: 2}
 --- !u!96 &6224977183169210927
 TrailRenderer:
   serializedVersion: 2

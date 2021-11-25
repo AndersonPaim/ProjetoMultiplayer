@@ -9,4 +9,7 @@ public class WeaponBalancer : ScriptableObject
     public float blastRadius;
     public float knockback;
     public float weight;
+    public float velocity;
+    public float reloading;
+    public Sprite sprite;
 }
