@@ -73,6 +73,7 @@ namespace Mirror.Examples.Pong
 
         private void Update()
         {
+
             if (_connection.hasAuthority && isLocalPlayer && _canMove)
             {
                 InputListener();
@@ -172,14 +173,24 @@ namespace Mirror.Examples.Pong
         private void Shoot()
         {
             OnShoot?.Invoke(_shootPos.transform.position, _weaponPos.transform.rotation, _bulletObj);
+            
+            float yRot = 360 - _weaponPos.transform.rotation.eulerAngles.z;
+
+
+            //TODO ARRUMAR ROTAÇÃO DA ARMA PRA CIMA
+            float xRot = 700 - (yRot * 7.77f);
+
+            yRot = yRot * 12;
 
             if(_direction == 1)
             {
-                _rb.AddForce(_weaponPos.transform.position * (150 / 3));
+                Vector3 shootKnockback = new Vector3(-xRot, yRot, 0);
+                _rb.AddForce(shootKnockback);
             }
             else
             {
-                _rb.AddForce(_weaponPos.transform.position * (150 / 3));
+                Vector3 shootKnockback = new Vector3(xRot, yRot, 0);
+                _rb.AddForce(shootKnockback);
             }
         }
 

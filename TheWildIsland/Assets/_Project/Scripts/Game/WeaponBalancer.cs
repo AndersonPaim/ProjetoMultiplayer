@@ -7,6 +7,6 @@ public class WeaponBalancer : ScriptableObject
 {
     public float damage;
     public float blastRadius;
-    public float cost;
     public float knockback;
+    public float weight;
 }

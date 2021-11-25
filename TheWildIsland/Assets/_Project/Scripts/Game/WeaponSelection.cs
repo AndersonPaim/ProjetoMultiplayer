@@ -29,7 +29,6 @@ public class WeaponSelection : MonoBehaviour
         _weaponsStats.SetActive(true);
         _blastRadiusStatSlider.value = _selectionWeapons[weapon].weaponBalancer.blastRadius;
         _attackStatSlider.value = _selectionWeapons[weapon].weaponBalancer.damage;
-        _costStatSlider.value = _selectionWeapons[weapon].weaponBalancer.cost;
     }
 
     public void HideWeaponStats(int weapon)

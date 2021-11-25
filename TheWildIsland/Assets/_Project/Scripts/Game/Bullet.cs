@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Mirror.Examples.Pong
 {
 
-    public class Bullet : MonoBehaviour
+    public class Bullet : NetworkBehaviour
     {
         [SerializeField] private WeaponBalancer _weaponBalancer;
         private Rigidbody2D _rb;
@@ -53,5 +53,7 @@ namespace Mirror.Examples.Pong
                 }
             }
         }
+
+
     }
 }
