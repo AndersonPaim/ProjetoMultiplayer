@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Mirror.Examples.Pong
 {
-
     public class Bullet : NetworkBehaviour
     {
         public int tipoArma;
@@ -34,7 +33,6 @@ namespace Mirror.Examples.Pong
             _anim = gameObject.GetComponent<Animator>();
         }
 
-
         private void OnCollisionEnter2D(Collision2D other)
         {
             _anim.SetTrigger("Explosion");
@@ -48,6 +46,7 @@ namespace Mirror.Examples.Pong
             foreach (Collider2D collider in colliders)
             {
                 Player player = collider.GetComponent<Player>();
+                DestructableObject obj = collider.GetComponent<DestructableObject>();
 
                 if (player != null)
                 {
@@ -56,6 +55,11 @@ namespace Mirror.Examples.Pong
                         Vector2 direction = collider.transform.position - transform.position;
                         collider.GetComponent<Rigidbody2D>().AddForce(direction * _weaponBalancer.knockback);
                     }
+                }
+
+                if(obj != null)
+                {
+                    obj.Damage();
                 }
             }
         }

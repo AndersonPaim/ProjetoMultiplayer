@@ -2,6 +2,7 @@ using UnityEngine;
 using CodeMonkey.Utils;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace Mirror.Examples.Pong
 {
@@ -9,21 +10,17 @@ namespace Mirror.Examples.Pong
     {
         public delegate void ShootHandler(Vector3 pos, Quaternion rot, GameObject bullet);
         public static ShootHandler OnShoot;
-        
-        [SerializeField] private WeaponBalancer[] _WeaponBalancer;
+
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private GameObject _weaponPos;
-        [SerializeField] private SpriteRenderer _weapon;
-        [SerializeField] private Sprite[] _spriteWeapons;
-        
         [SerializeField] private GameObject _bulletObj;
         [SerializeField] private GameObject _shootPos;
         [SerializeField] private PlayerConnection _connection;
         [SerializeField] private TextMeshPro _nicknameText;
-        [SerializeField] private Bullet bullet;
+
         public PlayerConnection Connection => _connection;
 
         private bool _isGrounded = true;
@@ -46,7 +43,7 @@ namespace Mirror.Examples.Pong
         private Vector3 _mousePos;
         private Vector3 _weaponDir;
         private bool _isRotating = false;
-        private int _numberWeapon;
+        private bool _canWalk = true;
 
         public void SetupPlayer(int number)
         {
@@ -65,7 +62,6 @@ namespace Mirror.Examples.Pong
             {
                 transform.position = new Vector3(-25, -8, 0);
             }
-           
         }
 
         private void Awake()
@@ -75,8 +71,6 @@ namespace Mirror.Examples.Pong
             //TODO change weapon
             _currentWeapon = _weaponPos.transform.GetChild(0).gameObject;
             _anim = GetComponent<Animator>();
-            bullet.tipoArma = 0;
-
         }
 
         private void Update()
@@ -92,9 +86,6 @@ namespace Mirror.Examples.Pong
                 _anim.SetBool("isRunning", _isRunning);
                 _anim.SetBool("isJumping", _isJumping);
                 _anim.SetBool("isGrounded", _isGrounded);
-
-                trocaArma();
-                QualArma(_numberWeapon);
             }
 
             if(_isRotating)
@@ -119,7 +110,6 @@ namespace Mirror.Examples.Pong
                 }
 
             }
-        
         }
 
         private void SetNicknameText(string oldValue, string newValue)
@@ -130,21 +120,24 @@ namespace Mirror.Examples.Pong
         //TODO NEW INPUT SYSTEM
         private void InputListener()
         {
-            if (Input.GetKey(KeyCode.A))
+            if(_canWalk)
             {
-                Movement(-1);
-                FlipPlayer(-1);
-                _isRunning = true;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                Movement(1);
-                FlipPlayer(1);
-                _isRunning = true;
-            }
-            else
-            {
-                _isRunning = false;
+                if (Input.GetKey(KeyCode.A))
+                {
+                    Movement(-1);
+                    FlipPlayer(-1);
+                    _isRunning = true;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    Movement(1);
+                    FlipPlayer(1);
+                    _isRunning = true;
+                }
+                else
+                {
+                    _isRunning = false;
+                }
             }
 
 
@@ -184,24 +177,51 @@ namespace Mirror.Examples.Pong
 
         private void Shoot()
         {
+            float vel = _rb.velocity.x;
+
+            if(vel == 0)
+            {
+                vel = 4.5f;
+            }
+            else if(vel < -0)
+            {
+                vel = 9;
+            }
+            else if(vel > 9)
+            {
+                vel = 9;
+            }
+
+            Debug.Log(vel);
+
             OnShoot?.Invoke(_shootPos.transform.position, _weaponPos.transform.rotation, _bulletObj);
-            
-            float yRot = 360 - _weaponPos.transform.rotation.eulerAngles.z;
 
+            _canWalk = false;
+            StartCoroutine(WalkDelay());
 
-            //TODO ARRUMAR ROTAÇÃO DA ARMA PRA CIMA
+            float yRot = 0;
+
+            if(_weaponPos.transform.rotation.eulerAngles.z < 180)
+            {
+                yRot = 0;
+            }
+            else
+            {
+                yRot = 360 - _weaponPos.transform.rotation.eulerAngles.z;
+            }
+
             float xRot = 700 - (yRot * 7.77f);
 
             yRot = yRot * 12;
 
             if(_direction == 1)
             {
-                Vector3 shootKnockback = new Vector3(-xRot, yRot, 0);
+                Vector3 shootKnockback = new Vector3(-xRot * (vel / 4.5f), yRot, 0);
                 _rb.AddForce(shootKnockback);
             }
             else
             {
-                Vector3 shootKnockback = new Vector3(xRot, yRot, 0);
+                Vector3 shootKnockback = new Vector3(xRot * (vel / 4.5f), yRot, 0);
                 _rb.AddForce(shootKnockback);
             }
         }
@@ -237,6 +257,12 @@ namespace Mirror.Examples.Pong
             }
         }
 
+        private IEnumerator WalkDelay()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _canWalk = true;
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             LayerMask groundLayer = LayerMask.NameToLayer("Ground");
@@ -257,35 +283,5 @@ namespace Mirror.Examples.Pong
               _isGrounded = false;
             }
         }
-        private void QualArma(int numberWepaon)
-        {
-
-
-            //   bullet.tipoArma =numberWepaon;
-            bullet._weaponBalancer = _WeaponBalancer[numberWepaon];
-            _weapon.sprite = _spriteWeapons[numberWepaon];
-
-
-
-        }
-        private void trocaArma()
-        {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _numberWeapon = 1;
-
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                _numberWeapon = 0;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _numberWeapon = 2;
-            }
-        }
-        
     }
-
-    
 }
