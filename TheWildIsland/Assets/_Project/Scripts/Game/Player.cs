@@ -277,8 +277,9 @@ namespace Mirror.Examples.Pong
         private void OnCollisionExit2D(Collision2D other)
         {
             LayerMask groundLayer = LayerMask.NameToLayer("Ground");
+            LayerMask platformLayer = LayerMask.NameToLayer("Platform");
 
-            if (other.gameObject.layer == groundLayer)
+            if (other.gameObject.layer == groundLayer || other.gameObject.layer == platformLayer)
             {
               _isGrounded = false;
             }
