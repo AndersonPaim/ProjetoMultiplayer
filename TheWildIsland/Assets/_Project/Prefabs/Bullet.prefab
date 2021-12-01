@@ -33,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5421146326761704071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.952851, y: -2.264112, z: -2.404933}
+  m_LocalPosition: {x: -13.952851, y: -2.264112, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,12 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _weaponBalancer:
-  - {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
-  - {fileID: 11400000, guid: 4b28dbe10f01aed4bb1821c7cc464cbf, type: 2}
-  - {fileID: 11400000, guid: 77b4e032a6bf9614f9925e5c81ebdff5, type: 2}
-  - {fileID: 11400000, guid: ebf704711a29e1247b9c454fae392ec3, type: 2}
-  - {fileID: 11400000, guid: 5aab3f571c6076648b81f357920f88e3, type: 2}
+  tipoArma: 0
+  _weaponBalancer: {fileID: 0}
 --- !u!96 &6224977183169210927
 TrailRenderer:
   serializedVersion: 2
