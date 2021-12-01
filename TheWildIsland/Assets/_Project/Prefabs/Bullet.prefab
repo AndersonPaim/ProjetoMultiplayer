@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4509158535801341383}
   - component: {fileID: 364679269}
   - component: {fileID: 638121353}
+  - component: {fileID: 6054999151836009309}
   m_Layer: 6
   m_Name: Bullet
   m_TagString: Untagged
@@ -121,12 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _weaponBalancer:
-  - {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
-  - {fileID: 11400000, guid: 4b28dbe10f01aed4bb1821c7cc464cbf, type: 2}
-  - {fileID: 11400000, guid: 77b4e032a6bf9614f9925e5c81ebdff5, type: 2}
-  - {fileID: 11400000, guid: ebf704711a29e1247b9c454fae392ec3, type: 2}
-  - {fileID: 11400000, guid: 5aab3f571c6076648b81f357920f88e3, type: 2}
+  _shake: {fileID: 6054999151836009309}
+  tipoArma: 0
+  _weaponBalancer: {fileID: 11400000, guid: 8bd55112fb81f4746adc3c1d5426a2ee, type: 2}
 --- !u!96 &6224977183169210927
 TrailRenderer:
   serializedVersion: 2
@@ -341,3 +339,20 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
+--- !u!114 &6054999151836009309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5421146326761704071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b6b88d425f7234aae309cb9a973743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Delay: 1
+  MaximumStress: 2
+  Range: 25
