@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1245621984278423268, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
+      propertyPath: m_AssetId
+      value: 67097b97412726a4f9826874c4f633ba
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090985864486392570, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
+      propertyPath: m_AssetId
+      value: 67097b97412726a4f9826874c4f633ba
+      objectReference: {fileID: 0}
     - target: {fileID: 5942977920412763906, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
       propertyPath: sceneId
       value: 1874595307
@@ -57,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6003096091459532931, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
       propertyPath: m_Name
-      value: Plataforma
+      value: Plataforma Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6003096091850752482, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -67,5 +75,6 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4973326391966897762, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6eeddc2a28149894883b3bab9137151c, type: 3}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6003096091459532928}
   - component: {fileID: 1101621335}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Plataforma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 6003096091850752482}
   - component: {fileID: 6003096091850752487}
   - component: {fileID: 6003096091850752483}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: plataforma
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,11 +14,11 @@ namespace Mirror.Examples.Pong
         [Tooltip("Maximum distance in which objects are affected by this TraumaInducer")]
         public float Range = 45;
 
-        private GameObject _camera;
+        private Camera _camera;
 
         private void Start()
         {
-            _camera = Camera.main.gameObject;
+            _camera = Camera.main;
             //ShakeCamera();
         }
 
@@ -46,7 +46,13 @@ namespace Mirror.Examples.Pong
                 if(distance > Range) continue;
                 float distance01 = Mathf.Clamp01(distance / Range);
                 float stress = (1 - Mathf.Pow(distance01, 2)) * MaximumStress;
-                _camera.GetComponent<StressReceiver>().InduceStress(stress);
+
+                Camera c = _camera;
+
+                if(c.GetComponent<StressReceiver>() != null)
+                {
+                    c.GetComponent<StressReceiver>().InduceStress(stress);
+                }
             }
         }
     }

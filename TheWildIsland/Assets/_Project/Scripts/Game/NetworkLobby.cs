@@ -115,7 +115,7 @@ public class NetworkLobby : NetworkBehaviour
 		{
 			OnStartGame?.Invoke();
 
-			string scene = "Space";
+			string scene = "Ice";
 			//TODO SORT SCENE
 
 
