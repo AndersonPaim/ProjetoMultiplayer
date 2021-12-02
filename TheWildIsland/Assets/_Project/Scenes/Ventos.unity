@@ -5693,7 +5693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5559712462816835639, guid: d7d83f8b62ea7e54a8e6ac2146dfba02, type: 3}
       propertyPath: m_ForceMagnitude
-      value: 29.13
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5559712462816835639, guid: d7d83f8b62ea7e54a8e6ac2146dfba02, type: 3}
       propertyPath: m_ForceVariation

@@ -9,7 +9,19 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Lobby.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/_Project/Scenes/Game.unity
+    path: Assets/_Project/Scenes/Platforms.unity
     guid: 89a84548859e3b643b4fb27984dc2b0d
+  - enabled: 1
+    path: Assets/_Project/Scenes/Ventos.unity
+    guid: ad08adb90b0061343bfac0aaa666ea4a
+  - enabled: 1
+    path: Assets/_Project/Scenes/Angular.unity
+    guid: 0bb30e856677a0a4496df15dd1f96be8
+  - enabled: 1
+    path: Assets/_Project/Scenes/Ice.unity
+    guid: c6ab9c234b13e194ba04e8c105a63159
+  - enabled: 1
+    path: Assets/_Project/Scenes/Space.unity
+    guid: aa9abf9f66b847946a623c8bdbfe8883
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 341248d4f6d28ef4f9bd5d2ad4aea07d, type: 2}

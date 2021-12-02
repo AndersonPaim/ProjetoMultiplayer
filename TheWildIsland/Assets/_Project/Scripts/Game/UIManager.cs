@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 
 namespace Mirror.Examples.Pong
 {
@@ -36,9 +36,11 @@ namespace Mirror.Examples.Pong
             Time.timeScale = 0;
         }
 
-        public void QuitGame()
+        private IEnumerator RestartGame(Player player)
         {
-            Application.Quit();
+            yield return new WaitForSeconds(5);
+            StartCoroutine(player.SpawnDelay());
+            SceneManager.LoadScene("Ice");
         }
     }
 }

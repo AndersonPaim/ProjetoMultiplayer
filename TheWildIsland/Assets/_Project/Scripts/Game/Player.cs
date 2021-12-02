@@ -44,10 +44,17 @@ namespace Mirror.Examples.Pong
         private Vector3 _weaponDir;
         private bool _isRotating = false;
         private bool _canWalk = true;
+        private bool _canShoot = true;
 
         public void SetupPlayer(int number)
         {
             _playerNumber = number;
+        }
+
+        public IEnumerator SpawnDelay()
+        {
+            yield return new WaitForSeconds(1);
+            SpawnPosition();
         }
 
         public void SpawnPosition()
@@ -68,7 +75,6 @@ namespace Mirror.Examples.Pong
         {
             DontDestroyOnLoad(transform.gameObject);
             NetworkLobby.OnStartGame += SpawnPosition;
-            //TODO change weapon
             _currentWeapon = _weaponPos.transform.GetChild(0).gameObject;
             _anim = GetComponent<Animator>();
         }
@@ -147,7 +153,10 @@ namespace Mirror.Examples.Pong
             }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Shoot();
+                if(_canShoot)
+                {
+                    Shoot();
+                }
             }
             if (Input.GetKey(KeyCode.Mouse1))
             {
@@ -177,6 +186,8 @@ namespace Mirror.Examples.Pong
 
         private void Shoot()
         {
+            _canShoot = false;
+            StartCoroutine(ShootDelay());
             float vel = _rb.velocity.x;
 
             if(vel == 0)
@@ -224,6 +235,12 @@ namespace Mirror.Examples.Pong
                 Vector3 shootKnockback = new Vector3(xRot * (vel / 4.5f), yRot, 0);
                 _rb.AddForce(shootKnockback);
             }
+        }
+
+        private IEnumerator ShootDelay()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _canShoot = true;
         }
 
         private void FlipPlayer(int newDirection)
