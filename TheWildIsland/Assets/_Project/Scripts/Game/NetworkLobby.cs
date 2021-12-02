@@ -24,15 +24,25 @@ public class NetworkLobby : NetworkBehaviour
 	[SerializeField] private UiLobbyPlayer _uiLobbyPlayer;
 	[SerializeField] private List<GameObject> _emptyLobbyUI;
 	[SerializeField] private Transform _uiLobbyPlayerPos;
+	[SerializeField] private List<string> _scenes = new List<string>();
 
 	[SyncVar]
 	private int _readyPlayers;
 	private Dictionary<String, UiLobbyPlayer> _playersConfirmed = new Dictionary<string, UiLobbyPlayer>();
 	private bool _canStart = true;
 
+	[SyncVar]
+	private string _scene;
+
 	private void Start()
 	{
 		Initialize();
+
+		if(isServer)
+		{
+			int rand = UnityEngine.Random.Range(0, _scenes.Count);
+			_scene = _scenes[rand];
+		}
 	}
 
 	private void Initialize()
@@ -109,23 +119,22 @@ public class NetworkLobby : NetworkBehaviour
 
 	private IEnumerator StartGame()
 	{
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(1);
 
 		if(_canStart)
 		{
-			OnStartGame?.Invoke();
+			SetScene();
+		}
+	}
 
-			string scene = "Ice";
-			//TODO SORT SCENE
+	private void SetScene()
+	{
+		OnStartGame?.Invoke();
+		SceneManager.LoadScene(_scene);
 
-
-			if(scene == "Space")
-			{
-				_gameSystem.LocalPlayer.GetComponent<Rigidbody2D>().gravityScale = 4;
-			}
-
-
-			SceneManager.LoadScene(scene);
+		if(_scene == "Space")
+		{
+			_gameSystem.LocalPlayer.GetComponent<Rigidbody2D>().gravityScale = 4;
 		}
 	}
 }

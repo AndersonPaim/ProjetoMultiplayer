@@ -5752,6 +5752,11 @@ MonoBehaviour:
   - {fileID: 1436868507}
   - {fileID: 320685071}
   _uiLobbyPlayerPos: {fileID: 1373840599}
+  _scenes:
+  - Ice
+  - Space
+  - Ventos
+  - Angular
 --- !u!114 &2128638860
 MonoBehaviour:
   m_ObjectHideFlags: 0
