@@ -114,7 +114,18 @@ public class NetworkLobby : NetworkBehaviour
 		if(_canStart)
 		{
 			OnStartGame?.Invoke();
-			SceneManager.LoadScene("Game");
+
+			string scene = "Space";
+			//TODO SORT SCENE
+
+
+			if(scene == "Space")
+			{
+				_gameSystem.LocalPlayer.GetComponent<Rigidbody2D>().gravityScale = 4;
+			}
+
+
+			SceneManager.LoadScene(scene);
 		}
 	}
 }

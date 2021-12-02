@@ -13,6 +13,9 @@ namespace Mirror.Examples.Pong
         public static LocalPlayerHandler OnLocalPlayer;
         public static ReadyHandler OnAddReady;
         public static ReadyHandler OnRemoveReady;
+        public delegate void PlayerDeadHandler(Player player);
+        public static PlayerDeadHandler OnPlayerDead;
+
 
         [SerializeField] private Player _player;
         [SerializeField] private GameObject _bulletObj;
@@ -46,7 +49,6 @@ namespace Mirror.Examples.Pong
                 }
             }
         }
-
         public void ReadyClick()
         {
             if (IsReady)
@@ -97,6 +99,13 @@ namespace Mirror.Examples.Pong
         }
 
         [Command]
+        public void CmdPlayerDead(Player player)
+        {
+            Debug.Log("CmdPlayerDead");
+            RpcPlayerDead(player);
+        }
+
+        [Command]
         public void CmdRemoveReady(Player player)
         {
             RpcRemoveReady(player);
@@ -113,8 +122,6 @@ namespace Mirror.Examples.Pong
             GameObject obj = Instantiate(_bulletObj, pos, rot);
             obj.GetComponent<Bullet>().Shoot();
             NetworkServer.Spawn(obj);
-
-            //TODO SET FORCE FROM CURRENT WEAPON
         }
 
         [ClientRpc]
@@ -127,6 +134,12 @@ namespace Mirror.Examples.Pong
         public void RpcRemoveReady(Player player)
         {
             OnRemoveReady?.Invoke(player);
+        }
+
+        [ClientRpc]
+        public void RpcPlayerDead(Player player)
+        {
+            OnPlayerDead?.Invoke(player);
         }
 
     }

@@ -10,7 +10,7 @@ public class Gangorra : MonoBehaviour
     {
         StartCoroutine(StartRotation());
     }
-    
+
     private IEnumerator StartRotation()
     {
         yield return new WaitForSeconds(1);

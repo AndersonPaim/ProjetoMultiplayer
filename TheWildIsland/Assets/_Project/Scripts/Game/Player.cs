@@ -266,11 +266,20 @@ namespace Mirror.Examples.Pong
         private void OnCollisionEnter2D(Collision2D other)
         {
             LayerMask groundLayer = LayerMask.NameToLayer("Ground");
+            LayerMask platformLayer = LayerMask.NameToLayer("Platform");
 
-            if (other.gameObject.layer == groundLayer)
+            Debug.Log(other.gameObject.layer);
+            if (other.gameObject.layer == groundLayer || other.gameObject.layer == platformLayer)
             {
                _isGrounded = true;
                _isJumping = false;
+            }
+            else if(other.gameObject.layer == 9)
+            {
+                if(_connection.hasAuthority)
+                {
+                    _connection.CmdPlayerDead(this);
+                }
             }
         }
 
@@ -281,7 +290,7 @@ namespace Mirror.Examples.Pong
 
             if (other.gameObject.layer == groundLayer || other.gameObject.layer == platformLayer)
             {
-              _isGrounded = false;
+                _isGrounded = false;
             }
         }
     }
