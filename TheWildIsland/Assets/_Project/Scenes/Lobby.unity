@@ -3209,6 +3209,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 5421146326761704071, guid: c6b013d9c7d80ea4c9a18f380509b30e, type: 3}
+  - {fileID: 7210607948492836077, guid: 58109a3b8b87dbd498f1a2e39ccd6463, type: 3}
   _players: []
   _connectionMenu: {fileID: 1678676534}
 --- !u!4 &1172955150
