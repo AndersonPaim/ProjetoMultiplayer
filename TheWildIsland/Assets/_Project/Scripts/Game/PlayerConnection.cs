@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Mirror.Examples.Pong
 {
@@ -36,6 +37,44 @@ namespace Mirror.Examples.Pong
                     Player.OnShoot += CmdShoot;
                 }
             }
+        }
+
+        private void Update()
+        {
+            if(isServer)
+            {
+                if(Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    RpcChangeScene("Ventos");
+                }
+                if(Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    RpcChangeScene("Space");
+                }
+                if(Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    RpcChangeScene("Angular");
+                }
+                if(Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    RpcChangeScene("Ice");
+                }
+            }
+        }
+
+        [ClientRpc]
+        private void RpcChangeScene(string scene)
+        {
+            if(scene == "Space")
+            {
+                _player.GetComponent<Rigidbody2D>().gravityScale = 4;
+            }
+            else
+            {
+                _player.GetComponent<Rigidbody2D>().gravityScale = 9;     
+            }
+
+            SceneManager.LoadScene(scene);
         }
 
         private void OnDestroy()

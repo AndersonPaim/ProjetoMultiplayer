@@ -45,6 +45,30 @@ public class NetworkLobby : NetworkBehaviour
 		}
 	}
 
+
+	private void Update()
+	{
+		if(isServer)
+		{
+			if(Input.GetKeyDown(KeyCode.Alpha1))
+			{
+				_scene = "Ventos";
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha2))
+			{
+				_scene = "Space";
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha3))
+			{
+				_scene = "Angular";
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha4))
+			{
+				_scene = "Ice";
+			}
+		}
+	}
+
 	private void Initialize()
 	{
 		_readyButton.onClick.AddListener(HandleReadyButtonClicked);

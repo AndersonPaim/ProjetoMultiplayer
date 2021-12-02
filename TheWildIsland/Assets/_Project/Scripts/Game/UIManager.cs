@@ -33,14 +33,14 @@ namespace Mirror.Examples.Pong
                 _gameOverText.text = "YOU WON!";
             }
 
-            Time.timeScale = 0;
+            player.SpawnPosition();
+            StartCoroutine(Respawn());
         }
 
-        private IEnumerator RestartGame(Player player)
+        private IEnumerator Respawn()
         {
-            yield return new WaitForSeconds(5);
-            StartCoroutine(player.SpawnDelay());
-            SceneManager.LoadScene("Ice");
+            yield return new WaitForSeconds(2);
+            _gameOverScreen.SetActive(false);
         }
     }
 }
