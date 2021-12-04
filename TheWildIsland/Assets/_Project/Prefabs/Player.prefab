@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 8793001645117550093}
   - component: {fileID: 7883867439312844635}
   - component: {fileID: -8268561183731146392}
+  - component: {fileID: 3958348982423881606}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -496,6 +497,7 @@ MonoBehaviour:
   _shootPos: {fileID: 8686188580555380450}
   _connection: {fileID: 1629680191917204825}
   _nicknameText: {fileID: 7129349327660914164}
+  _jumpAudio: {fileID: 8300000, guid: 73499bdc24fab2d478ef0c13b05cebfd, type: 3}
   PlayerName: 
 --- !u!114 &1629680191917204825
 MonoBehaviour:
@@ -638,6 +640,14 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 8155924010822682366}
+--- !u!81 &3958348982423881606
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7923852577702581511}
+  m_Enabled: 1
 --- !u!1 &8686188580555380450
 GameObject:
   m_ObjectHideFlags: 0

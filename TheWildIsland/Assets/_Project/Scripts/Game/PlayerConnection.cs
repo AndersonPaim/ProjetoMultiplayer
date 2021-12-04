@@ -20,6 +20,7 @@ namespace Mirror.Examples.Pong
 
         [SerializeField] private Player _player;
         [SerializeField] private GameObject _bulletObj;
+        [SerializeField] private UIManager _uiManager;
 
         public Player LocalPlayer {get; set;}
         public bool IsReady = false;
@@ -71,10 +72,19 @@ namespace Mirror.Examples.Pong
             }
             else
             {
-                _player.GetComponent<Rigidbody2D>().gravityScale = 9;     
+                _player.GetComponent<Rigidbody2D>().gravityScale = 9;
             }
 
             SceneManager.LoadScene(scene);
+            StartCoroutine(SetUIPlayers());
+
+        }
+
+        private IEnumerator SetUIPlayers()
+        {
+            yield return new WaitForSeconds(1);
+            _uiManager = FindObjectOfType<UIManager>();
+            _uiManager.SetupPlayer(_player);
         }
 
         private void OnDestroy()

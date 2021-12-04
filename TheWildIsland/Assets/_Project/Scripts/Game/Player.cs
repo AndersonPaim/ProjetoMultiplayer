@@ -20,6 +20,10 @@ namespace Mirror.Examples.Pong
         [SerializeField] private GameObject _shootPos;
         [SerializeField] private PlayerConnection _connection;
         [SerializeField] private TextMeshPro _nicknameText;
+        [SerializeField] private UIManager _uiManager;
+        [Header("AUDIO")]
+        [SerializeField] private AudioClip _jumpAudio;
+        [SerializeField] private GameObject _audioSourceObj;
 
         public PlayerConnection Connection => _connection;
 
@@ -45,6 +49,7 @@ namespace Mirror.Examples.Pong
         private bool _isRotating = false;
         private bool _canWalk = true;
         private bool _canShoot = true;
+        private AudioManager _audioManager;
 
         public void SetupPlayer(int number)
         {
@@ -69,6 +74,16 @@ namespace Mirror.Examples.Pong
             {
                 transform.position = new Vector3(-25, -8, 0);
             }
+
+            StartCoroutine(SetUIPlayers());
+
+        }
+
+        private IEnumerator SetUIPlayers()
+        {
+            yield return new WaitForSeconds(1);
+            _uiManager = FindObjectOfType<UIManager>();
+            _uiManager.SetupPlayer(this);
         }
 
         private void Awake()
@@ -77,6 +92,12 @@ namespace Mirror.Examples.Pong
             NetworkLobby.OnStartGame += SpawnPosition;
             _currentWeapon = _weaponPos.transform.GetChild(0).gameObject;
             _anim = GetComponent<Animator>();
+            _audioManager = Transform.FindObjectOfType<AudioManager>();
+
+            if(!hasAuthority)
+            {
+                GetComponent<AudioListener>().enabled = false;
+            }
         }
 
         private void Update()
@@ -271,6 +292,7 @@ namespace Mirror.Examples.Pong
             {
                 _rb.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
                 _isJumping = true;
+                AudioManager.sInstance.PlayAudio(_jumpAudio, gameObject.transform, 1);
             }
         }
 
@@ -285,7 +307,6 @@ namespace Mirror.Examples.Pong
             LayerMask groundLayer = LayerMask.NameToLayer("Ground");
             LayerMask platformLayer = LayerMask.NameToLayer("Platform");
 
-            Debug.Log(other.gameObject.layer);
             if (other.gameObject.layer == groundLayer || other.gameObject.layer == platformLayer)
             {
                _isGrounded = true;
