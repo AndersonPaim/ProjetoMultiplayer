@@ -39,6 +39,7 @@ namespace Mirror.Examples.Pong
 
         [SyncVar(hook = nameof(SetNicknameText))]
         public string PlayerName;
+        public int PlayerNumber => _playerNumber;
 
         private float _sensitivity = 0.4f;
         private Vector3 _mouseReference;
@@ -130,7 +131,7 @@ namespace Mirror.Examples.Pong
                 }
                 else
                 {
-                    if(angle -180 < 90 && angle -180 > -90)
+                    if(angle > 90 && angle < 180 || angle < -90 && angle > -180)
                     {
                         _weaponPos.transform.eulerAngles = new Vector3(0, 180, -angle -180);
                     }

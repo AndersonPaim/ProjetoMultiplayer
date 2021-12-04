@@ -22,17 +22,20 @@ namespace Mirror.Examples.Pong
         {
             if(player.hasAuthority)
             {
-                _playerNameText.text = player.PlayerName;
+                _oponentNameText.text = player.PlayerName;
             }
             else
             {
-                _oponentNameText.text = player.PlayerName;
+                _playerNameText.text = player.PlayerName;
             }
         }
 
         private void Start()
         {
             PlayerConnection.OnPlayerDead += GameOver;
+
+            _playerScoreText.color = Color.yellow;
+            _oponentScoreText.color = Color.yellow;
         }
 
         private void OnDestroy()
@@ -46,19 +49,23 @@ namespace Mirror.Examples.Pong
             if(player.hasAuthority)
             {
                 _score++;
+
                 _playerScoreText.text = _score.ToString();
 
                 if(_score > _oponentScore)
                 {
                     _playerScoreText.color = Color.green;
+                    _oponentScoreText.color = Color.red;
                 }
                 else if(_score == _oponentScore)
                 {
                     _playerScoreText.color = Color.yellow;
+                    _oponentScoreText.color = Color.yellow;
                 }
                 else
                 {
                     _playerScoreText.color = Color.red;
+                    _oponentScoreText.color = Color.green;
                 }
             }
             else
@@ -69,25 +76,28 @@ namespace Mirror.Examples.Pong
                 if(_score < _oponentScore)
                 {
                     _oponentScoreText.color = Color.green;
+                    _playerScoreText.color = Color.red;
                 }
                 else if(_score == _oponentScore)
                 {
+                    _playerScoreText.color = Color.yellow;
                     _oponentScoreText.color = Color.yellow;
                 }
                 else
                 {
                     _oponentScoreText.color = Color.red;
+                    _playerScoreText.color = Color.green;
                 }
             }
 
             if(_score == 10)
             {
-                _winScreen.SetActive(true);
+                _lossScreen.SetActive(true);
                 StartCoroutine(CloseGame());
             }
             else if(_oponentScore == 10)
             {
-                _lossScreen.SetActive(true);
+                _winScreen.SetActive(true);
                 StartCoroutine(CloseGame());
             }
 
